@@ -12,6 +12,7 @@ export const colors = {
   },
   accent: {
     purple: "#C27CFB",
+    lightPurple: "#C27CFB",
     blue: "#7DAFFF",
     cyan: "#55EAE1",
     green: "#32D74B",
