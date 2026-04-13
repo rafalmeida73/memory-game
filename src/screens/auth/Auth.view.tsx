@@ -35,7 +35,7 @@ export const AuthView: FC<ReturnType<typeof useAuthViewModel>> = ({
           <View style={styles.logoContainer}>
             <Image
               style={styles.logo}
-              source={require("@/assets/Logo.png")}
+              source={require("@/assets/images/Logo.png")}
               resizeMode="contain"
             />
           </View>

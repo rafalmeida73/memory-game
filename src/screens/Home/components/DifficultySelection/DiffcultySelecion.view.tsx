@@ -1,14 +1,18 @@
 import { colors } from "@/constants/colors";
 import { AppText } from "@/shared/components/AppText";
-import { getDifficultyColor } from "@/shared/utils/difficulty";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Pressable, StyleSheet, View } from "react-native";
-import { DifficultyIconView } from "./DifficultyIcon/DifficultyIcon.view";
+import { StyleSheet, View } from "react-native";
+import Animated from "react-native-reanimated";
+import { DifficultyTab } from "./DifficultyTab";
 import { useDifficultyViewModel } from "./useDifficulty.viewModel";
 
 export const DifficultySelectionView = () => {
-  const { difficulties, selectedDifficulty, setSelectedDifficulty } =
-    useDifficultyViewModel();
+  const {
+    difficulties,
+    selectedDifficulty,
+    setSelectedDifficulty,
+    animatedIndicatorStyle,
+  } = useDifficultyViewModel();
   return (
     <View style={styles.difficultySection}>
       <View style={styles.difficultyHeader}>
@@ -24,29 +28,22 @@ export const DifficultySelectionView = () => {
       </View>
 
       <View style={styles.difficultyTabs}>
-        {difficulties.map((difficulty) => (
-          <Pressable
-            style={styles.difficultyTab}
+        <Animated.View style={[styles.indicator, animatedIndicatorStyle]} />
+        {difficulties.map((difficulty, index) => (
+          <DifficultyTab
             key={`difficulty-key-${difficulty}`}
-            onPress={() => setSelectedDifficulty(difficulty)}
-          >
-            <View style={styles.difficultyBadge}>
-              <DifficultyIconView
-                color={getDifficultyColor(difficulty)}
-                difficulty={difficulty}
-                inactiveColor={colors.grayscale.gray200}
-                isSelected={selectedDifficulty === difficulty}
-              />
-              <AppText>{difficulty}</AppText>
-            </View>
-          </Pressable>
+            difficulty={difficulty}
+            index={index}
+            isSelected={selectedDifficulty === difficulty}
+            setSelectedDifficulty={setSelectedDifficulty}
+          />
         ))}
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   difficultySection: {
     marginBottom: 24,
   },
@@ -77,22 +74,17 @@ const styles = StyleSheet.create({
     borderColor: colors.grayscale.gray400,
     borderWidth: 1,
   },
-  difficultyTab: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
+  indicator: {
+    position: "absolute",
+    width: "33.33%",
+    top: 4,
+    zIndex: 0,
     borderRadius: 100,
-    gap: 6,
-    zIndex: 1,
-  },
-  difficultyBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    padding: 8,
-    borderRadius: "50%",
+    left: 0,
+    bottom: 4,
+    backgroundColor: colors.grayscale.gray500,
+    borderColor: colors.grayscale.gray400,
+    borderWidth: 1,
+    marginLeft: 4,
   },
 });
