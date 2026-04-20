@@ -1,30 +1,40 @@
 import { colors } from "@/constants/colors";
 import { AppText } from "@/shared/components/AppText";
+import { Difficulty } from "@/shared/interfaces/difficulty";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { DifficultyTab } from "./DifficultyTab";
 import { useDifficultyViewModel } from "./useDifficulty.viewModel";
 
-export const DifficultySelectionView = () => {
+export interface DifficultySelectionProps {
+  selectedDifficulty: Difficulty;
+  setSelectedDifficulty: (difficulty: Difficulty) => void;
+}
+
+export const DifficultySelectionView: FC<DifficultySelectionProps> = ({
+  selectedDifficulty,
+  setSelectedDifficulty,
+}) => {
   const {
     difficulties,
-    selectedDifficulty,
-    setSelectedDifficulty,
     animatedIndicatorStyle,
-  } = useDifficultyViewModel();
+    difficultyConfig,
+    timeAnimatedStyle,
+  } = useDifficultyViewModel({ selectedDifficulty, setSelectedDifficulty });
   return (
     <View style={styles.difficultySection}>
       <View style={styles.difficultyHeader}>
         <AppText style={styles.difficultyLabel}>Dificuldade</AppText>
-        <View style={styles.timeIndicator}>
+        <Animated.View style={[styles.timeIndicator, timeAnimatedStyle]}>
           <MaterialCommunityIcons
             name="clock-outline"
             color={colors.feedback.info}
             size={16}
           />
-          <AppText>5 min</AppText>
-        </View>
+          <AppText>{difficultyConfig.estimatedTime}</AppText>
+        </Animated.View>
       </View>
 
       <View style={styles.difficultyTabs}>

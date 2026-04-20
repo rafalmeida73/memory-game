@@ -1,10 +1,13 @@
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { GameView } from "@/screens/Game/Game.view";
+import { Difficulty } from "@/shared/interfaces/difficulty";
+import { useLocalSearchParams } from "expo-router";
 
 export default function Game() {
-  return (
-    <SafeAreaView>
-      <Text>Game</Text>
-    </SafeAreaView>
-  );
+  const params = useLocalSearchParams<{
+    themeId: string;
+    difficulty: Difficulty;
+  }>();
+
+  console.log(params);
+  return <GameView />;
 }
