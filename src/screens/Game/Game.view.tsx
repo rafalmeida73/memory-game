@@ -1,16 +1,18 @@
-import { colors } from '@/constants/colors'
-import { AppText } from '@/shared/components/AppText'
-import { StyleSheet, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { CardGrid } from './components/CardGrid'
-import { CountdownOverlay } from './components/CountdownOverlay'
-import { useGameViewModel } from './useGame.viewModel'
+import { colors } from "@/constants/colors";
+import { AppText } from "@/shared/components/AppText";
+import { StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { CardGrid } from "./components/CardGrid";
+import { CountdownOverlay } from "./components/CountdownOverlay";
+import { GameHeaderView } from "./components/GameHeader/GameHeader.view";
+import { useGameViewModel } from "./useGame.viewModel";
 
 export const GameView = () => {
   const { selectedTheme, countdownVisible, handleCountdownComplete } =
-    useGameViewModel()
+    useGameViewModel();
   return (
     <SafeAreaView style={styles.container}>
+      <GameHeaderView />
       <View style={styles.gameInfo}>
         <AppText style={styles.title}>{selectedTheme?.title}</AppText>
         <AppText style={styles.subtitle}>
@@ -24,8 +26,8 @@ export const GameView = () => {
         onComplete={handleCountdownComplete}
       />
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     color: colors.grayscale.gray100,
-    fontFamily: 'Baloo2_800ExtraBold',
+    fontFamily: "Baloo2_800ExtraBold",
   },
   subtitle: {
     fontSize: 16,
@@ -46,4 +48,4 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 24,
   },
-})
+});

@@ -8,7 +8,7 @@ interface Params {
   index: number;
 }
 
-export const GameCard: FC<Params> = ({ card }) => {
-  const viewModel = useGameCardViewModel({ card });
+export const GameCard: FC<Params> = ({ card, index }) => {
+  const viewModel = useGameCardViewModel({ card, index });
   return <GameCardView {...viewModel} />;
 };

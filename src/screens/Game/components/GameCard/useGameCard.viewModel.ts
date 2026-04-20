@@ -1,3 +1,4 @@
+import { useCardEntryAnimation } from "@/animations/hooks/useCardEntryAnimation";
 import { useGameStore } from "@/shared/stores/game.store";
 import { StoreCard } from "@/shared/utils/challenge";
 import { useEffect } from "react";
@@ -10,12 +11,15 @@ import {
 
 interface Props {
   card: StoreCard;
+  index: number;
 }
 
-export const useGameCardViewModel = ({ card }: Props) => {
+export const useGameCardViewModel = ({ card, index }: Props) => {
   const rotation = useSharedValue(card.isFlipped ? 180 : 0);
 
   const { selectCard } = useGameStore();
+
+  const entry = useCardEntryAnimation({ cardIndex: index });
 
   const frontAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
@@ -35,5 +39,5 @@ export const useGameCardViewModel = ({ card }: Props) => {
     rotation.value = withSpring(card.isFlipped ? 180 : 0, { duration: 300 });
   }, [card.isFlipped, rotation]);
 
-  return { card, frontAnimatedStyle, backAnimatedStyle, selectCard };
+  return { card, frontAnimatedStyle, backAnimatedStyle, selectCard, entry };
 };
