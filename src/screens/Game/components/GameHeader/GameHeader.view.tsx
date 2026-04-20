@@ -2,14 +2,23 @@ import { usePressAnimation } from "@/animations/hooks/usePressAnimation";
 import { colors } from "@/constants/colors";
 import { AppText } from "@/shared/components/AppText";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { FC } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { useGameHeaderViewModel } from "./useGameHeader.viewModel";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export const GameHeaderView = () => {
-  const { timeString, isCriticalTime } = useGameHeaderViewModel();
+interface GameHeaderViewProps {
+  onGoBack: () => void;
+}
+
+export const GameHeaderView: FC<GameHeaderViewProps> = ({ onGoBack }) => {
+  const {
+    timeString,
+    isCriticalTime,
+    animatedStyle: animatedTimerStyle,
+  } = useGameHeaderViewModel();
 
   const { animatedStyle, onPressIn, onPressOut } = usePressAnimation({
     scaleActive: 0.8,
@@ -21,6 +30,7 @@ export const GameHeaderView = () => {
         style={[styles.backButton, animatedStyle]}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
+        onPress={onGoBack}
       >
         <MaterialCommunityIcons
           name="chevron-left"
@@ -29,7 +39,7 @@ export const GameHeaderView = () => {
         />
       </AnimatedPressable>
 
-      <Animated.View style={styles.timerContainer}>
+      <Animated.View style={[styles.timerContainer, animatedTimerStyle]}>
         <MaterialCommunityIcons
           name="clock-outline"
           size={20}

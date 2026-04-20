@@ -8,11 +8,15 @@ import { GameHeaderView } from "./components/GameHeader/GameHeader.view";
 import { useGameViewModel } from "./useGame.viewModel";
 
 export const GameView = () => {
-  const { selectedTheme, countdownVisible, handleCountdownComplete } =
-    useGameViewModel();
+  const {
+    selectedTheme,
+    countdownVisible,
+    handleCountdownComplete,
+    handleGoBack,
+  } = useGameViewModel();
   return (
     <SafeAreaView style={styles.container}>
-      <GameHeaderView />
+      <GameHeaderView onGoBack={handleGoBack} />
       <View style={styles.gameInfo}>
         <AppText style={styles.title}>{selectedTheme?.title}</AppText>
         <AppText style={styles.subtitle}>
@@ -42,6 +46,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     color: colors.grayscale.gray200,
+    marginBottom: 32,
   },
   gameInfo: {
     paddingHorizontal: 20,
