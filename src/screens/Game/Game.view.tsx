@@ -23,6 +23,7 @@ export const GameView = () => {
     handleConfirmExit,
     handleCancelExit,
     showVictoryModal,
+    handleGoToHistory,
   } = useGameViewModel();
   return (
     <SafeAreaView style={styles.container}>
@@ -54,8 +55,8 @@ export const GameView = () => {
 
       <VictoryModalView
         visible={showVictoryModal}
+        onGoHistory={handleGoToHistory}
         onPlayAgain={handleTryAgain}
-        onGoHistory={handleConfirmExit}
       />
     </SafeAreaView>
   );

@@ -5,6 +5,7 @@ import { Baloo2_700Bold } from "@expo-google-fonts/baloo-2/700Bold";
 import { Baloo2_800ExtraBold } from "@expo-google-fonts/baloo-2/800ExtraBold";
 import { useFonts } from "@expo-google-fonts/baloo-2/useFonts";
 import { Stack } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 
 export default function RootLayout() {
@@ -16,11 +17,17 @@ export default function RootLayout() {
     Baloo2_800ExtraBold,
   });
 
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(public)" />
-      <Stack.Screen name="(private)" />
-      <Stack.Screen name="index" />
-    </Stack>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(public)" />
+        <Stack.Screen name="(private)" />
+        <Stack.Screen name="index" />
+      </Stack>
+    </GestureHandlerRootView>
   );
 }

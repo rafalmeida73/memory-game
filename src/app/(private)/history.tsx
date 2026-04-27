@@ -1,9 +1,8 @@
-import { Text, View } from "react-native";
+import { HistoryView } from "@/screens/History/History.view";
+import { useHistoryViewModel } from "@/screens/History/useHistory.viewModel";
 
 export default function History() {
-  return (
-    <View>
-      <Text>History</Text>
-    </View>
-  );
+  const viewModel = useHistoryViewModel();
+
+  return <HistoryView {...viewModel} />;
 }
