@@ -1,12 +1,12 @@
 import { Dimensions } from "react-native";
+import { Gesture } from "react-native-gesture-handler";
 import {
-  runOnJS,
   interpolate,
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { Gesture } from "react-native-gesture-handler";
 
 interface UseSweepToDeleteProps {
   onDelete: () => void;
