@@ -6,6 +6,7 @@ import {
   withDelay,
   withTiming,
 } from "react-native-reanimated";
+import { ANIMATION_TIMINGS } from "../config/animation.config";
 
 export const useCardTimeoutAnimation = () => {
   const translateY = useSharedValue(0);
@@ -14,29 +15,38 @@ export const useCardTimeoutAnimation = () => {
 
   const fallAnimation = useCallback(
     (delay: number) => {
+      const config = ANIMATION_TIMINGS.fall;
       const randomRotation = (Math.random() - 0.5) * 60;
 
       translateY.value = withDelay(
         delay,
-        withTiming(800, { duration: 600, easing: Easing.in(Easing.cubic) }),
+        withTiming(800, {
+          duration: config.duration,
+          easing: Easing.in(Easing.cubic),
+        }),
       );
 
       rotation.value = withDelay(
         delay,
         withTiming(randomRotation, {
-          duration: 300,
+          duration: config.rotation,
           easing: Easing.out(Easing.ease),
         }),
       );
 
-      opacity.value = withDelay(delay + 300, withTiming(0, { duration: 200 }));
+      opacity.value = withDelay(
+        delay + config.opacityDelay,
+        withTiming(0, { duration: config.opacityDuration }),
+      );
     },
     [translateY, rotation, opacity],
   );
 
   const resetAnimation = useCallback(() => {
     translateY.value = 0;
-  }, [translateY]);
+    rotation.value = 0;
+    opacity.value = 1;
+  }, [translateY, rotation, opacity]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
